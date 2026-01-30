@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Clyde Video Conference</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .join-box {
+      background: #1f1f1f;
+      padding: 25px;
+      border-radius: 10px;
+      width: 320px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="join-box">
+    <h2>Clyde Video Conference</h2>
+
+    <input id="nameInput" placeholder="Your name" />
+
+    <select id="roleInput">
+      <option value="Pastor">Pastor</option>
+      <option value="Leader">Leader</option>
+      <option value="Teacher">Teacher</option>
+      <option value="Member">Member</option>
+      <option value="New Invite">New Invite</option>
+    </select>
+
+    <input id="roomInput" placeholder="Room name" />
+
+    <button onclick="joinRoom()">Join Meeting</button>
+  </div>
+
+  <script>
+    function joinRoom() {
+      const name = document.getElementById("nameInput").value;
+      const role = document.getElementById("roleInput").value;
+      const room = document.getElementById("roomInput").value;
+
+      if (!name || !room) {
+        alert("Please enter your name and room.");
+        return;
+      }
+
+      window.location.href =
+        "room.html?room=" + encodeURIComponent(room) +
+        "&name=" + encodeURIComponent(name) +
+        "&role=" + encodeURIComponent(role);
+    }
+  </script>
+
+</body>
+</html>
+
