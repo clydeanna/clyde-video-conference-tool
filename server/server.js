@@ -1,6 +1,8 @@
 const WebSocket = require("ws");
+const PORT = process.env.PORT || 3000;
 
-const wss = new WebSocket.Server({ port: 3000 });
+const wss = new WebSocket.Server({ port: PORT });
+
 const rooms = {};
 
 wss.on("connection", socket => {

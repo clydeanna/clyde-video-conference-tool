@@ -1,110 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Clyde Video Conference Tool</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #121212;
-      color: white;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      padding: 10px 16px;
-      background: #1f1f1f;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .videos {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding: 12px;
-    }
-
-    .video-box {
-      position: relative;
-      width: 100%;
-    }
-
-    video {
-      width: 100%;
-      min-height: 220px;
-      background: black;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-
-    .label {
-      position: absolute;
-      bottom: 6px;
-      left: 6px;
-      background: rgba(0,0,0,0.6);
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-    }
-
-    .controls {
-      background: #1f1f1f;
-      padding: 10px;
-      display: flex;
-      gap: 8px;
-    }
-
-    button {
-      flex: 1;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      font-size: 14px;
-    }
-
-    .start { background: #2ecc71; }
-    .danger { background: #e74c3c; color: white; }
-    .secondary { background: #555; color: white; }
-    .primary { background: #3498db; color: white; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clyde Video Conference</title>
 </head>
-
 <body>
+  <h1>🎥 Clyde Video Conference</h1>
+  <p>Live</p>
 
-  <header>
-    <h3>🎥 Clyde Video Conference</h3>
-    <span>Live</span>
-  </header>
+  <video id="localVideo" autoplay playsinline muted style="width:100%; max-width:400px;"></video>
 
-  <div class="videos">
-    <div class="video-box">
-      <video id="localVideo" playsinline muted></video>
-      <div class="label" id="localLabel"></div>
-    </div>
+  <br/><br/>
+  <button id="startBtn">Start Camera</button>
+  <button id="muteBtn">Mute</button>
+  <button id="cameraBtn">Camera Off</button>
 
-    <div class="video-box">
-      <video id="remoteVideo" playsinline></video>
-      <div class="label" id="remoteLabel"></div>
-    </div>
-  </div>
+  <script>
+    let stream;
+    let videoOn = true;
+    let audioOn = true;
 
-  <div class="controls">
-    <button id="startBtn" class="start">Start Camera</button>
-    <button id="muteBtn" class="danger">Mute</button>
-    <button id="cameraBtn" class="secondary">Camera Off</button>
-    <button id="shareBtn" class="primary">Share</button>
-  </div>
+    const video = document.getElementById("localVideo");
 
-  <script src="main.js"></script>
+    document.getElementById("startBtn").onclick = async () => {
+      stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      video.srcObject = stream;
+    };
 
+    document.getElementById("muteBtn").onclick = () => {
+      if (!stream) return;
+      audioOn = !audioOn;
+      stream.getAudioTracks()[0].enabled = audioOn;
+    };
+
+    document.getElementById("cameraBtn").onclick = () => {
+      if (!stream) return;
+      videoOn = !videoOn;
+      stream.getVideoTracks()[0].enabled = videoOn;
+    };
+  </script>
 </body>
 </html>
-
