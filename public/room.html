@@ -40,5 +40,36 @@
       stream.getVideoTracks()[0].enabled = videoOn;
     };
   </script>
+  <!-- FIREBASE START -->
+<!--<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>-->
+<!--<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>-->
+
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyD1qucpfwwOV4EXzsannLsHdRum0vemzDo",
+  authDomain: "clyde-video-conference-tool.firebaseapp.com",
+  databaseURL: "https://clyde-video-conference-tool-default-rtdb.firebaseio.com",
+  projectId: "clyde-video-conference-tool",
+  storageBucket: "clyde-video-conference-tool.firebasestorage.app",
+  messagingSenderId: "540551450730",
+  appId: "1:540551450730:web:46f9a056846812ff1fba13"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// 🔍 Firebase test
+database.ref("test").set({
+  message: "Firebase is working!",
+  time: Date.now()
+});
+
+console.log("Firebase test message sent");
+
+</script>
+<!-- FIREBASE END -->
+
 </body>
 </html>

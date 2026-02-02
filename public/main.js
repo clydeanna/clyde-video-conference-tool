@@ -14,7 +14,8 @@ const userRole = params.get("role") || "Member";
 
 localLabel.textContent = `${userName} (${userRole})`;
 
-const socket = new WebSocket("ws://localhost:3000");
+
+
 
 const peerConnection = new RTCPeerConnection({
   iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
@@ -61,8 +62,7 @@ peerConnection.onicecandidate = e => {
 };
 
 // SIGNALING
-socket.onopen = () => {
-  socket.send(JSON.stringify({
+/
     type: "join",
     room,
     name: userName,
@@ -70,7 +70,7 @@ socket.onopen = () => {
   }));
 };
 
-socket.onmessage = async msg => {
+
   const data = JSON.parse(msg.data);
 
   if (data.name) remoteLabel.textContent = `${data.name} (${data.role})`;
@@ -78,14 +78,14 @@ socket.onmessage = async msg => {
   if (data.type === "join") {
     const offer = await peerConnection.createOffer();
     await peerConnection.setLocalDescription(offer);
-    socket.send(JSON.stringify({ type: "offer", room, offer }));
+    
   }
 
   if (data.type === "offer") {
     await peerConnection.setRemoteDescription(data.offer);
     const answer = await peerConnection.createAnswer();
     await peerConnection.setLocalDescription(answer);
-    socket.send(JSON.stringify({ type: "answer", room, answer }));
+    
   }
 
   if (data.type === "answer") {
